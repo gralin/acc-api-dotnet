@@ -3,13 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-	  <RootNamespace>Gralin.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+      <RootNamespace>Gralin.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyName>Gralin.$(MSBuildProjectName)</AssemblyName>
     <Authors>Gralin</Authors>
     <Description>Avigilon Control Center (ACC) API for .NET</Description>
     <RepositoryUrl>https://github.com/gralin/acc-api-dotnet</RepositoryUrl>
     <PackageTags>acc;avigilon;wep;api;sdk</PackageTags>
+    <Version>0.0.1-alpha2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
