@@ -11,12 +11,13 @@ public class WebEndpointClient : IDisposable
     private readonly AuthTokenGenerator _tokenGenerator;
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _serializerSettings;
-    private Uri _baseUri;
+    private readonly Uri _baseUri;
     private string _session;
 
-    private WebEndpointClient(string userNonce, string userKey, ILogger logger = null)
+    private WebEndpointClient(string userNonce, string userKey, Uri baseUri, ILogger logger = null)
     {
         _tokenGenerator = new AuthTokenGenerator(userNonce, userKey);
+        _baseUri = baseUri;
         _logger = logger;
         _serializerSettings = new JsonSerializerOptions
         {
@@ -25,14 +26,14 @@ public class WebEndpointClient : IDisposable
         };
     }
 
-    public WebEndpointClient(string userNonce, string userKey, HttpClient httpClient, ILogger logger = null)
-        : this(userNonce, userKey, logger)
+    internal WebEndpointClient(string userNonce, string userKey, Uri baseUri, HttpClient httpClient,
+        ILogger logger) : this(userNonce, userKey, baseUri, logger)
     {
         _httpClient = httpClient;
     }
 
-    public WebEndpointClient(string userNonce, string userKey, bool ignoreSslErrors = true, ILogger logger = null)
-        : this(userNonce, userKey, logger)
+    internal WebEndpointClient(string userNonce, string userKey, Uri baseUri, bool ignoreSslErrors,
+        ILogger logger) : this(userNonce, userKey, baseUri, logger)
     {
         var httpClientHandler = new HttpClientHandler();
 
@@ -45,11 +46,6 @@ public class WebEndpointClient : IDisposable
     public void Dispose()
     {
         _httpClient?.Dispose();
-    }
-
-    public void Setup(string baseUri)
-    {
-        _baseUri = new Uri(baseUri);
     }
 
     public async Task Login(string username, string password, string clientName = nameof(WebEndpointClient))

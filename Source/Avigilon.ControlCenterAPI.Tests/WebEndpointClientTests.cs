@@ -16,10 +16,11 @@ public class WebEndpointClientTests
     public const string UserNonce = "UserNonce";
     public const string UserKey = "UserKey";
     public const string ApiAddress = "https://127.0.0.1:8443/mt/api/rest/v1/";
-    public const string Login = "Login";
+    public const string Username = "Username";
     public const string Password = "Password";
 
     private readonly ILogger _logger;
+    private readonly WebEndpointClientFactory _clientFactory;
 
     public WebEndpointClientTests()
     {
@@ -30,6 +31,8 @@ public class WebEndpointClientTests
         });
 
         _logger = loggerFactory.CreateLogger(typeof(WebEndpointClient));
+
+        _clientFactory = new WebEndpointClientFactory(UserNonce, UserKey);
     }
 
     public HttpClient MockHttpClient(Action<IProtectedMock<HttpMessageHandler>> setupHandler)
@@ -58,9 +61,8 @@ public class WebEndpointClientTests
                 }", Encoding.UTF8, "application/json")
             }));
 
-        var client = new WebEndpointClient(UserNonce, UserKey, httpClient, _logger);
-        client.Setup(ApiAddress);
+        var client = _clientFactory.Create(new Uri(ApiAddress), httpClient, _logger);
 
-        await client.Login(Login, Password);
+        await client.Login(Username, Password);
     }
 }
