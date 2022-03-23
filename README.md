@@ -1,6 +1,6 @@
 # Avigilon Control Center (ACC) API for .NET
 
-![Nuget](https://img.shields.io/nuget/vpre/Gralin.Avigilon.ControlCenterAPI)
+[![Nuget](https://img.shields.io/nuget/vpre/Gralin.Avigilon.ControlCenterAPI)](https://www.nuget.org/packages/Gralin.Avigilon.ControlCenterAPI)
 
 ## About
 
@@ -17,7 +17,11 @@ Currently limited functionality is available but it's easy to extend (contributi
 
 ```csharp
 var factory = new WebEndpointClientFactory("user_nonce", "user_key");
+
 var client = factory.Create(new Uri("https://acc_address:8443"));
+
 await client.Login("username", "password");
-var cameras = await client.GetCameras();
+
+foreach (var camera in await client.GetCameras())
+    Console.WriteLine(camera.Name);
 ```
