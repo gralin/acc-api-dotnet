@@ -1,5 +1,7 @@
 # Avigilon Control Center (ACC) API for .NET
 
+![Nuget](https://img.shields.io/nuget/vpre/Gralin.Avigilon.ControlCenterAPI)
+
 ## About
 
 This library alows you to communicate with Avigilon Control Center (ACC) API from .NET. Before you can start using it, you need to send and email to integrations@avigilon.com and ask for your unique pair of user nonce and user key values. Only having those will you be able to communicate with ACC server instance.
